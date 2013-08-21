@@ -1,4 +1,4 @@
 OpenGrab_CAN
 ============
 
-CAN extension board for Electro-Permanent cargo gripper OpenGrab.
+CAN extension board for Electro-Permanent cargo gripper OpenGrab. (Under construction)

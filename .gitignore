@@ -1,17 +1,11 @@
 # Object files
 *.o
 
-# Libraries
-*.lib
+# Outputs
 *.a
-
-# Shared objects (inc. Windows DLLs)
-*.dll
 *.so
 *.so.*
-*.dylib
-
-# Executables
-*.exe
 *.out
-*.app
+
+# CMake generated
+*/build
