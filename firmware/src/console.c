@@ -35,7 +35,7 @@ static void _printErrnoStatus(int err)
     if (err == 0)
         _puts("OK");
     else
-        PRINTF("Failed: %d %s\n", err, strerror(err));
+        PRINTF("ERROR %d %s\n", err, strerror(err));
 }
 
 // ========= Commands =========
@@ -55,7 +55,7 @@ static void cmd_param(BaseSequentialStream *chp, int argc, char *argv[])
             const char* name = cfgGetNameByIndex(i);
             if (!name)
                 break;
-            PRINTF("%s \t= %d\n", name, cfgGet(name));
+            PRINTF("%s = %d\n", name, cfgGet(name));
         }
     }
     else if (!strcmp(command, "save"))
@@ -77,7 +77,7 @@ static void cmd_param(BaseSequentialStream *chp, int argc, char *argv[])
         int value = 0;
         const int res = cfgTryGet(name, &value);
         if (res == 0)
-            PRINTF("%d\n", value);
+            PRINTF("%s = %d\n", name, value);
         else
             _printErrnoStatus(res);
     }
@@ -91,8 +91,10 @@ static void cmd_param(BaseSequentialStream *chp, int argc, char *argv[])
         const char* const name = argv[1];
         const int value = atoi(argv[2]);
         const int res = cfgTrySet(name, value);
-        PRINTF("%s <-- %d\n", name, value);
-        _printErrnoStatus(res);
+        if (res == 0)
+            PRINTF("%s = %d\n", name, value);
+        else
+            _printErrnoStatus(res);
     }
     else
     {
@@ -108,19 +110,11 @@ static void cmd_param(BaseSequentialStream *chp, int argc, char *argv[])
 static void cmd_magnet(BaseSequentialStream *chp, int argc, char *argv[])
 {
     if (argc < 1)
-    {
-        PRINTF("Magnet state: %d\n", (int)magnetReadFeedback());
-    }
+        PRINTF("%d\n", (int)magnetReadFeedback());
     else if (argv[0][0] == '0')
-    {
-        _puts("Magnet set OFF");
         magnetSetState(false);
-    }
     else
-    {
-        _puts("Magnet set ON");
         magnetSetState(true);
-    }
 }
 
 static void cmd_reset(BaseSequentialStream *chp, int argc, char *argv[])
