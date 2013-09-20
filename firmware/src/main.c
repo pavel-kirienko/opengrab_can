@@ -69,9 +69,12 @@ int main(void)
     if (res)
     {
         TRACE("init", "CANAS NOT INITED (%d), FIX CONFIG AND RESTART", res);
-        ledOn();
         while (1)
-            chThdSleepSeconds(999);
+        {
+            ledOn();
+            watchdogReset(wdid);
+            chThdSleepMilliseconds(100);
+        }
     }
 
 #if RELEASE
