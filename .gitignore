@@ -1,11 +1,15 @@
-# Object files
-*.o
-
 # Outputs
+*.o
+*.elf
+*.bin
+lib*.so
+lib*.so.*
 *.a
-*.so
-*.so.*
-*.out
+.dep
+build
 
-# CMake generated
-*/build
+# Eclipse
+.metadata/*
+.settings/*
+.project
+.cproject
