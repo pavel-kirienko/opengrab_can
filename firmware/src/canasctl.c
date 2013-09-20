@@ -5,6 +5,7 @@
 #include <can_driver.h>
 #include <canaerospace/canaerospace.h>
 #include <canaerospace/services/std_identification.h>
+#include "watchdog.h"
 #include "canasctl.h"
 #include "sys/sys.h"
 #include "config.h"
@@ -20,6 +21,8 @@ static char _strbuf[CANAS_DUMP_BUF_LEN];
 
 static int _msgid_magnet_state   = -1;
 static int _msgid_magnet_command = -1;
+
+static int _watchdog_id = -1;
 
 /*
  * ---
@@ -80,6 +83,8 @@ static msg_t _thread(void* arg)
             prevCb1hz = current_timestamp;
             _1hz();
             _checkErrors();
+
+            watchdogReset(_watchdog_id);
         }
     }
     return 0;
@@ -166,6 +171,8 @@ static void _cbMagnetCommand(CanasInstance* pi, CanasParamCallbackArgs* args)
 
 int canasctlInit(void)
 {
+    _watchdog_id = watchdogStart();
+
     /*
      * CAN driver
      */

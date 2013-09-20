@@ -6,11 +6,14 @@
 #include <hal.h>
 #include <string.h>
 #include "sys/sys.h"
+#include "watchdog.h"
 #include "config.h"
 #include "console.h"
 #include "magnet.h"
 #include "canasctl.h"
 #include "flash_storage.h"
+
+#define WATCHDOG_TIMEOUT_MS   2000
 
 static void restoreConfig(void)
 {
@@ -54,6 +57,9 @@ int main(void)
     chSysInit();
     sdStart(&STDOUT_SD, NULL);
 
+    watchdogInit(WATCHDOG_TIMEOUT_MS);
+    const int wdid = watchdogStart();
+
     restoreConfig();
     magnetInit();
     consoleInit();
@@ -93,6 +99,8 @@ int main(void)
             ledOff();
             chThdSleepMilliseconds(930);
         }
+
+        watchdogReset(wdid);
     }
     return 0;
 }

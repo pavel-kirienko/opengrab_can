@@ -2,7 +2,13 @@
 # Pavel Kirienko, 2013 (pavel.kirienko@gmail.com)
 #
 
-CSRC = src/main.c src/flash_storage.c src/config.c src/console.c src/magnet.c src/canasctl.c
+CSRC = src/main.c          \
+       src/flash_storage.c \
+       src/watchdog.c      \
+       src/config.c        \
+       src/console.c       \
+       src/magnet.c        \
+       src/canasctl.c
 
 UINCDIR = src/sys
 

@@ -52,7 +52,7 @@ void magnetSetState(bool active)
     const int plen = active ? PWM_PULSE_LEN_USEC_ON : PWM_PULSE_LEN_USEC_OFF;
 
     const pwmcnt_t width = PWM_FRACTION_TO_WIDTH(&PWMD, PWM_PERIOD_USEC, plen);
-    DBGTRACE("magnet", "PWM period %u, width %u", (unsigned int)PWMD.period, (unsigned int)width);
+    //DBGTRACE("magnet", "PWM period %u, width %u", (unsigned int)PWMD.period, (unsigned int)width);
 
     pwmEnableChannel(&PWMD, 0, width);
     _requested_state_active = active;
