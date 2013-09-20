@@ -53,8 +53,10 @@ static void _blockingPollReadUpdate(int timeout_usec)
 
 static void _checkErrors(void)
 {
+    static const unsigned int UNINTERESTING_ERRORS = CAN_ERRFLAG_TX_TIMEOUT | CAN_ERRFLAG_HARDWARE;
+
     const unsigned int errmask = canYieldErrors(0);
-    if (errmask)
+    if (errmask & ~UNINTERESTING_ERRORS)
         TRACE("canasctl", "CAN errmask %04x", errmask);
 }
 

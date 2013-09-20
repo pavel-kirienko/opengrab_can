@@ -4,19 +4,13 @@
 
 #include <ch.h>
 #include <hal.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 #include "sys/sys.h"
 #include "config.h"
 #include "console.h"
 #include "magnet.h"
 #include "canasctl.h"
 #include "flash_storage.h"
-#include <can_driver.h>
-#include <canaerospace/canaerospace.h>
-#include <canaerospace/services/std_identification.h>
 
 static void restoreConfig(void)
 {
