@@ -67,7 +67,7 @@
 extern "C" {
 #endif
     void boardInit(void);
-    void jtagDisable(void);
+    void debugPortDisable(void);
 #ifdef __cplusplus
 }
 #endif

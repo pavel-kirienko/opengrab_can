@@ -171,8 +171,6 @@ static void _cbMagnetCommand(CanasInstance* pi, CanasParamCallbackArgs* args)
 
 int canasctlInit(void)
 {
-    _watchdog_id = watchdogStart();
-
     /*
      * CAN driver
      */
@@ -224,6 +222,8 @@ int canasctlInit(void)
     /*
      * OS
      */
+    _watchdog_id = watchdogStart();
+
     ASSERT_ALWAYS(chThdCreateStatic(waCanas, sizeof(waCanas), HIGHPRIO, _thread, NULL));
 
     return 0;

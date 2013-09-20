@@ -13,7 +13,8 @@
 #include "canasctl.h"
 #include "flash_storage.h"
 
-#define WATCHDOG_TIMEOUT_MS   2000
+#define WATCHDOG_TIMEOUT_MS             2000
+#define DEBUG_PORT_DISABLE_DEADLINE_SEC 20
 
 static void restoreConfig(void)
 {
@@ -73,6 +74,11 @@ int main(void)
             chThdSleepSeconds(999);
     }
 
+#if RELEASE
+    TRACE("init", "debug port will be disabled %d sec later", DEBUG_PORT_DISABLE_DEADLINE_SEC);
+#endif
+
+    bool debug_port_disabled = false;
     while (1)
     {
         const bool
@@ -98,6 +104,17 @@ int main(void)
             chThdSleepMilliseconds(70);
             ledOff();
             chThdSleepMilliseconds(930);
+        }
+
+        if (!debug_port_disabled)
+        {
+            if (sysTimestampMicros() / 1000000 > DEBUG_PORT_DISABLE_DEADLINE_SEC)
+            {
+#if RELEASE
+                debugPortDisable();
+#endif
+                debug_port_disabled = true;
+            }
         }
 
         watchdogReset(wdid);

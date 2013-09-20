@@ -19,12 +19,26 @@ void __early_init(void)
     stm32_clock_init();
 }
 
-void jtagDisable(void)
+void debugPortDisable(void)
 {
-    AFIO->MAPR |= AFIO_MAPR_SWJ_CFG_JTAGDISABLE;
+    __disable_irq();
+    uint32_t mapr = AFIO->MAPR;
+    mapr &= ~AFIO_MAPR_SWJ_CFG;  // these bits are write-only
+
+    // Disable both SWD and JTAG:
+    mapr |= AFIO_MAPR_SWJ_CFG_DISABLE;
+
+    AFIO->MAPR = mapr;
+    __enable_irq();
 }
 
 void boardInit(void)
 {
-    //AFIO->MAPR |= ;
+    uint32_t mapr = AFIO->MAPR;
+    mapr &= ~AFIO_MAPR_SWJ_CFG;  // these bits are write-only
+
+    // Enable SWJ only, JTAG is not needed at all:
+    mapr |= AFIO_MAPR_SWJ_CFG_JTAGDISABLE;
+
+    AFIO->MAPR = mapr;
 }
