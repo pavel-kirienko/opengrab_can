@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <canaerospace/message.h>
+#include <canaerospace/param_id/uav.h>
 #include "sys/sys.h"
 #include "config.h"
 #include "canasctl.h"
@@ -41,8 +42,8 @@ static const ParamDescriptor _descriptors[] =
     PARAM_VLD("canas_service_chan",         0,          validateCanasServiceChan)
     PARAM_RNG("canas_num_redund_chans_to_listen",3,     1,      4)
     // messages
-    PARAM_RNG("canas_msgid_magnet_state",   CANASCTL_MSGID_GRIPPER_GRIP_STATE,  MSGID_MIN,  MSGID_MAX)
-    PARAM_RNG("canas_msgid_magnet_command", CANASCTL_MSGID_GRIPPER_GRIP_CMD,    MSGID_MIN,  MSGID_MAX)
+    PARAM_RNG("canas_msgid_magnet_state",   CANAS_UAV_GRIPPER_GRIP_STATE,  MSGID_MIN,  MSGID_MAX)
+    PARAM_RNG("canas_msgid_magnet_command", CANAS_UAV_GRIPPER_GRIP_COMMAND,MSGID_MIN,  MSGID_MAX)
 };
 
 // ===================================

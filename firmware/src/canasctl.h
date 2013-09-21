@@ -7,12 +7,6 @@
 
 #include <stdbool.h>
 
-enum
-{
-    CANASCTL_MSGID_GRIPPER_GRIP_CMD     = 450,
-    CANASCTL_MSGID_GRIPPER_GRIP_STATE   = 451
-};
-
 int canasctlInit(void);
 
 extern bool canasctlReadMagnetFeedback(void);
