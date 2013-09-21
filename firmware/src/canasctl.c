@@ -13,6 +13,8 @@
 static const int MY_HARDWARE_REVISION = 1;
 static const int MY_SOFTWARE_REVISION = 1;
 
+static const int CAN_TX_TIMEOUT_USEC = 125 * 200;
+
 static CanasInstance _canas_instance;
 
 static WORKING_AREA(waCanas, 2048);
@@ -174,7 +176,7 @@ int canasctlInit(void)
     /*
      * CAN driver
      */
-    int res = canInit(cfgGet("can_bitrate"), 4000);
+    int res = canInit(cfgGet("can_bitrate"), CAN_TX_TIMEOUT_USEC);
     CHECKERR(res, "CAN driver");
 
     /*
