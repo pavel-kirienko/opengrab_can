@@ -214,7 +214,7 @@ int canasctlInit(void)
     _msgid_magnet_state   = cfgGet("canas_msgid_magnet_state");
     _msgid_magnet_command = cfgGet("canas_msgid_magnet_command");
 
-    res = canasParamAdvertise(&_canas_instance, _msgid_magnet_state);
+    res = canasParamAdvertise(&_canas_instance, _msgid_magnet_state, false);
     CHECKERR(res, "magnet state advertisement");
 
     res = canasParamSubscribe(&_canas_instance, _msgid_magnet_command, num_redund_channels_to_subscribe,
