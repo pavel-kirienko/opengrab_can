@@ -33,6 +33,7 @@ The firmware can be built with ARM GCC or any other GCC-based ARM toolchain.
 
 1. Place the [libcanaerospace][2] sources into the same directory with this repository.
 2. Build:
+
 ```shell
 cd opengrab_can/firmware
 make RELEASE=1
