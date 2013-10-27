@@ -49,7 +49,8 @@ void systemHaltHook(void)
     writepoll("\n");
 }
 
-void _exit(int status){
+void _exit(int status)
+{
     (void)status;
     chSysHalt();
     while(TRUE) { }
