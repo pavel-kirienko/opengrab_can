@@ -27,19 +27,20 @@ The set of CANaerospace messages used by this node is documented below. Note tha
 
 ## Getting Hardware
 Coming late 2013.
+
 Schematics and Gerber files are available in this repository; hardware design files are available upon request.
 
 ## Building Firmware
 The firmware can be built with ARM GCC or any other GCC-based ARM toolchain.
 
-1. Place the [libcanaerospace][2] sources into the same directory with this repository.
-2. Build:
+- Place the [libcanaerospace][2] sources into the same directory with this repository.
+- Build:
 
 ```shell
 cd opengrab_can/firmware
 make RELEASE=1
 ```
-3. Flash.
+- Flash.
 
 ## Setup
 Use CLI via the TTL UART connector at 115200-8-N-1. Note that CLI will not be available unless the RX pin was pulled up at startup; that means that the UART cable must be connected before power-up.
