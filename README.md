@@ -27,6 +27,7 @@ The set of CANaerospace messages used by this node is documented below. Note tha
 
 ## Getting Hardware
 Coming late 2013.
+Schematics and Gerber files are available in this repository; hardware design files are available upon request.
 
 ## Building Firmware
 The firmware can be built with ARM GCC or any other GCC-based ARM toolchain.
