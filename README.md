@@ -1,12 +1,14 @@
-CANaerospace Controller for OpenGrab
+OGCAN - CAN bus interface for OpenGrab EPM
 ============
 
-CANaerospace controller for [OpenGrab - electro-permanent cargo holding magnet][1].
+CAN bus interface for [OpenGrab - electro-permanent cargo holding magnet][1].
 
 Based on [libcanaerospace][2] - open-source CANaerospace protocol implementation.
 
+[UAVCAN protocol][4] support is scheduled for April 2014.
+
 ## CANaerospace Interface
-The set of CANaerospace messages used by this node is documented below. Note that the message IDs can be reconfigured.
+The set of CANaerospace messages used by this node is documented below. Note that the message IDs can be reconfigured via CLI.
 
 #### Input parameters
 ###### CANAS_UAV_GRIPPER_GRIP_COMMAND
@@ -26,7 +28,7 @@ The set of CANaerospace messages used by this node is documented below. Note tha
 - Transmission rate: 1 Hz
 
 ## Getting Hardware
-Coming late 2013.
+Grab your OGCAN hardware here: http://nicadrone.com/index.php?id_product=18&controller=product
 
 Schematics and Gerber files are available in this repository; hardware design files are available upon request.
 
@@ -48,7 +50,7 @@ Use CLI via the TTL UART connector at 115200-8-N-1. Note that CLI will not be av
 Execute `help` to get a short command reference.
 
 ## Test
-Clone and install the [pycanbus][3] library. This is the Python module that enables access to the CAN network.
+Linux only! Clone and install the [pycanbus][3] library. This is the Python module that enables access to the CAN network under Linux.
 
 Use script from the `tools/` directory to switch the magnet or read it's state:
 ```shell
@@ -59,3 +61,4 @@ cd opengrab_can/tools
 [1]: https://code.google.com/p/opengrab/
 [2]: https://bitbucket.org/pavel_kirienko/canaerospace
 [3]: https://bitbucket.org/pavel_kirienko/pycanbus
+[4]: http://www.diydrones.com/profiles/blogs/uavcan-can-bus-for-uav
