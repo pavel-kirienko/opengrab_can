@@ -36,7 +36,7 @@ UDEFS += -DCORTEX_ENABLE_WFI_IDLE=1 -DSTDOUT_SD=SD1 -DSTDIN_SD=STDOUT_SD
 
 PROJECT = opengrab_can
 
-USE_OPT = -falign-functions=16 --std=c99 -Wno-unused-parameter -U__STRICT_ANSI__
+USE_OPT = -falign-functions=16 --std=c99 -Wno-unused-parameter -Wno-strict-aliasing -U__STRICT_ANSI__
 USE_COPT =
 USE_CPPOPT = -fno-rtti
 
