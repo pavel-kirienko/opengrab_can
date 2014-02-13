@@ -37,7 +37,7 @@ static void _blockingPollReadUpdate(int timeout_usec)
     int ret = canReceive(&iface, &frm, timeout_usec);
     if (ret < 0)
     {
-        TRACE("canasctl", "CAN RX failed: %i\n", ret);
+        TRACE("canasctl", "CAN RX failed: %i", ret);
         return;
     }
 
@@ -71,7 +71,7 @@ static msg_t _thread(void* arg)
 {
     static const int UPDATE_INTERVAL_USEC = 10 * 1000;
 
-    uint64_t prevCb1hz = sysTimestampMicros();
+    uint64_t prev_cb_1hz = sysTimestampMicros();
 
     chRegSetThreadName("canasctl");
 
@@ -80,9 +80,9 @@ static msg_t _thread(void* arg)
         _blockingPollReadUpdate(UPDATE_INTERVAL_USEC);
 
         const uint64_t current_timestamp = sysTimestampMicros();
-        if (current_timestamp - prevCb1hz > 1000000)
+        if (current_timestamp - prev_cb_1hz > 1000000)
         {
-            prevCb1hz = current_timestamp;
+            prev_cb_1hz = current_timestamp;
             _1hz();
             _checkErrors();
 
