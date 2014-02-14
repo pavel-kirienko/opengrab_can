@@ -6,8 +6,11 @@
 #define _BOARD_H_
 
 #include "assert.h"
-/// needed for SPL
-#define assert_param(x) ASSERT(x)
+#if SPL_ASSERTIONS
+#   define assert_param(x)  ASSERT(x)
+#else
+#   define assert_param(x)  ((void)0)
+#endif
 
 #define STM32_HSECLK            8000000
 

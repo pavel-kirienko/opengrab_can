@@ -46,7 +46,8 @@ ifneq ($(RELEASE),0)
     USE_OPT += -O1 -fomit-frame-pointer
 else
     DDEFS += -DDEBUG
-    USE_OPT += -O0 -ggdb
+    #DDEFS += -DSPL_ASSERTIONS=1     # SPL asserts use like 16k of flash
+    USE_OPT += -O1 -g3
 endif
 
 USE_LINK_GC = yes
