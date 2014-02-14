@@ -226,7 +226,7 @@ int canasctlInit(void)
      */
     _watchdog_id = watchdogStart();
 
-    ASSERT_ALWAYS(chThdCreateStatic(waCanas, sizeof(waCanas), HIGHPRIO, _thread, NULL));
+    ASSERT_ALWAYS(chThdCreateStatic(waCanas, sizeof(waCanas), HIGHPRIO - 1, _thread, NULL));
 
     return 0;
 }
