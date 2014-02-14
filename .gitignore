@@ -1,7 +1,6 @@
 # Outputs
 *.o
 *.elf
-*.bin
 lib*.so
 lib*.so.*
 *.a
