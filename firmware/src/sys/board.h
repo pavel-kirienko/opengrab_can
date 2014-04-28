@@ -5,13 +5,6 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
-#include "assert.h"
-#if SPL_ASSERTIONS
-#   define assert_param(x)  ASSERT(x)
-#else
-#   define assert_param(x)  ((void)0)
-#endif
-
 #define STM32_HSECLK            8000000
 
 #define STM32F10X_MD

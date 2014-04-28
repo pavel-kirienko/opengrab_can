@@ -1,4 +1,3 @@
-# Outputs
 *.o
 *.elf
 lib*.so
@@ -6,9 +5,14 @@ lib*.so.*
 *.a
 .dep
 build
+.gdbinit
 
 # Eclipse
 .metadata/*
 .settings/*
 .project
 .cproject
+
+# Libs
+uavcan
+dsdlc_generated

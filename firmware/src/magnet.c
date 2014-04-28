@@ -2,11 +2,11 @@
  * Pavel Kirienko, 2013 (pavel.kirienko@gmail.com)
  */
 
+#include "magnet.h"
 #include <ch.h>
 #include <hal.h>
-#include "sys/sys.h"
-#include "magnet.h"
-#include "watchdog.h"
+#include <crdr_chibios/sys/sys.h>
+#include <crdr_chibios/watchdog/watchdog.h>
 
 #define PWMD    PWMD1
 
@@ -44,10 +44,17 @@ static bool _requested_state = false;
 static WORKING_AREA(_wa_magnet_thread, 1024);
 
 
+static uint64_t sysTimestampMicros(void)
+{
+    // TODO: use proper 64-bit timestamping. This will overflow in 49 days causing unexpected behavior.
+    return (((uint64_t)chTimeNow()) * 1000000ULL) / CH_FREQUENCY;
+}
+
 static msg_t _thread(void* arg)
 {
+    (void)arg;
     watchdogReset(_watchdog_id);
-    chThdSleepMilliseconds(1000);     // Giving some time to magnet to initialize
+    chThdSleepMilliseconds(500);
     watchdogReset(_watchdog_id);
 
     const uint64_t init_deadline = sysTimestampMicros() + INIT_DURATION_SEC * 1000000ul;
@@ -78,7 +85,7 @@ static msg_t _thread(void* arg)
 
         if (prev_pulse_len != pulse_len)
         {
-            TRACE("magnet", "PWM pulse len: %i usec", pulse_len);
+            lowsyslog("Magnet: PWM pulse len: %i usec\n", pulse_len);
             prev_pulse_len = pulse_len;
         }
 
@@ -101,10 +108,10 @@ void magnetInit(void)
     /*
      * Thread
      */
-    _watchdog_id = watchdogStart();
+    _watchdog_id = watchdogCreate(1000);
     ASSERT_ALWAYS(chThdCreateStatic(_wa_magnet_thread, sizeof(_wa_magnet_thread), LOWPRIO, _thread, NULL));
 
-    TRACE("magnet", "initial state: %i, watchdog id: %i", (int)initial_state, (int)_watchdog_id);
+    lowsyslog("Magnet: Initial state: %i, watchdog id: %i", (int)initial_state, (int)_watchdog_id);
 }
 
 void magnetSetState(bool active)

@@ -2,8 +2,7 @@
  * Pavel Kirienko, 2013 (pavel.kirienko@gmail.com)
  */
 
-#ifndef PROJECT_HALCONF_H_
-#define PROJECT_HALCONF_H_
+#pragma once
 
 #include "mcuconf.h"
 
@@ -30,6 +29,4 @@
 #define SERIAL_DEFAULT_BITRATE      115200
 #define SERIAL_BUFFERS_SIZE         128
 
-#include "../../chibios/os/hal/templates/halconf.h"
-
-#endif
+#include <crdr_chibios/sys/halconf_tail.h>
