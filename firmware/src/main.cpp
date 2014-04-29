@@ -1,5 +1,5 @@
 /*
- * Pavel Kirienko, 2013 (pavel.kirienko@gmail.com)
+ * Copyright (c) 2013-2014 Pavel Kirienko <pavel.kirienko@gmail.com>
  */
 
 #include <ch.h>
