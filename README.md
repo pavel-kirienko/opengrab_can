@@ -3,29 +3,22 @@ OGCAN - CAN bus interface for OpenGrab EPM
 
 CAN bus interface for [OpenGrab - electro-permanent cargo holding magnet][1].
 
-Based on [libcanaerospace][2] - open-source CANaerospace protocol implementation.
+Based on [UAVCAN - CAN bus for UAV][2].
 
-[UAVCAN protocol][4] support is scheduled for April 2014.
+## UAVCAN interface
+Supported standard data structures (data structs that are mandatory for any UAVCAN node are not listed):
 
-## CANaerospace Interface
-The set of CANaerospace messages used by this node is documented below. Note that the message IDs can be reconfigured via CLI.
+- Configuration: `uavcan.protocol.param.*`
+- Magnet control: `uavcan.equipment.hardpoint.*`
 
-#### Input parameters
-###### CANAS_UAV_GRIPPER_GRIP_COMMAND
-- ID: 1820
-- Type: CHAR
-- Values:
-    - 0 - turn the magnet off
-    - 1+ - activate the magnet
+OGCAN publishes state of the EPM once a second using `uavcan.equipment.hardpoint.Status`.
 
-#### Output parameters
-###### CANAS_UAV_GRIPPER_GRIP_STATE
-- ID: 1821
-- Type: CHAR
-- Values:
-    - 0 - magnet OFF
-    - 1+ - magnet ON
-- Transmission rate: 1 Hz
+EPM can be controlled using `uavcan.equipment.hardpoint.Command`.
+
+Default config:
+
+- CAN bitrate: 1 Mbps.
+- UAVCAN Node ID: 125.
 
 ## Getting Hardware
 Grab your OGCAN hardware here: http://nicadrone.com/index.php?id_product=18&controller=product
@@ -33,32 +26,31 @@ Grab your OGCAN hardware here: http://nicadrone.com/index.php?id_product=18&cont
 Schematics and Gerber files are available in this repository; hardware design files are available upon request.
 
 ## Building Firmware
-The firmware can be built with ARM GCC or any other GCC-based ARM toolchain.
+**Prebuilt binary for the latest stable version is available in `firmware/prebuilt/*.bin`.**
 
-- Place the [libcanaerospace][2] sources into the same directory with this repository.
-- Build:
+The firmware can be built with Embedded ARM GCC or any other GCC-based ARM toolchain.
 
 ```shell
-cd opengrab_can/firmware
-make RELEASE=1
+# Clone the repository
+git clone https://github.com/pavel-kirienko/opengrab_can
+cd opengrab_can/
+git submodule init
+git submodule update
+
+# Pull the dependencies
+cd firmware/crdr_chibios/
+./fetch_chibios.sh
+cd ..
+git clone https://github.com/pavel-kirienko/uavcan  # Or make a symlink instead
+
+# Build
+make RELEASE=1                                      # Omit RELEASE=1 to build debug version
+
+# Flash. The following helper scripts are available:
+# ./crdr_chibios/tools/stlink_flash.sh       # ST-Link v2
+# ./crdr_chibios/tools/blackmagic_flash.sh   # Black Magic Debug Probe
 ```
-- Flash.
 
-## Setup
-Use CLI via the TTL UART connector at 115200-8-N-1. Note that CLI will not be available unless the RX pin was pulled up at startup; that means that the UART cable must be connected before power-up.
-
-Execute `help` to get a short command reference.
-
-## Test
-Linux only! Clone and install the [pycanbus][3] library. This is the Python module that enables access to the CAN network under Linux.
-
-Use script from the `tools/` directory to switch the magnet or read it's state:
-```shell
-cd opengrab_can/tools
-./canas_control.py <can-iface>       # Simply prints all incoming CAN frames
-./canas_control.py <can-iface> <0/1> # Sends the CANaerospace message to turn the magnet OFF/ON
-```
 [1]: https://code.google.com/p/opengrab/
-[2]: https://bitbucket.org/pavel_kirienko/canaerospace
-[3]: https://bitbucket.org/pavel_kirienko/pycanbus
-[4]: http://www.diydrones.com/profiles/blogs/uavcan-can-bus-for-uav
+[2]: http://uavcan.org/
+[3]: https://github.com/pavel-kirienko/uavcan/
