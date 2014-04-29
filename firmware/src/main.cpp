@@ -11,6 +11,8 @@
 #include <crdr_chibios/config/config.hpp>
 #include <uavcan_stm32/uavcan_stm32.hpp>
 #include <uavcan/protocol/param_server.hpp>
+#include <uavcan/equipment/hardpoint/Command.hpp>
+#include <uavcan/equipment/hardpoint/Status.hpp>
 #include "console.h"
 #include "magnet.h"
 
@@ -94,15 +96,24 @@ Node& getNode()
     return node;
 }
 
-uavcan::ParamServer& getParamServer()
-{
-    static uavcan::ParamServer server(getNode());
-    return server;
-}
-
 void setLed(bool status)
 {
     palWritePad(GPIOB, GPIOB_LED, status);
+}
+
+void handleHardpointCommand(const uavcan::ReceivedDataStructure<uavcan::equipment::hardpoint::Command>& msg)
+{
+    lowsyslog("Cmd %u NID %u\n", unsigned(msg.command), unsigned(msg.getSrcNodeID().get()));
+    magnetSetState(msg.command > 0);
+}
+
+void publishHardpointStatus(const uavcan::TimerEvent&)
+{
+    uavcan::equipment::hardpoint::Status msg;
+    msg.cargo_weight_variance = -1;
+    msg.status = magnetReadFeedback() ? 1 : 0;
+    static uavcan::Publisher<uavcan::equipment::hardpoint::Status> pub(getNode());
+    (void)pub.broadcast(msg);
 }
 
 void init()
@@ -125,14 +136,14 @@ void init()
         int can_res = can.init(param_can_bitrate.get());
         if (can_res >= 0)
         {
-            lowsyslog("CAN bitrate %u\n", unsigned(param_can_bitrate.get()));
+            lowsyslog("CAN %u bps\n", unsigned(param_can_bitrate.get()));
             break;
         }
-        lowsyslog("CAN init failed [%i], trying default bitrate...\n", can_res);
+        lowsyslog("CAN init [%i], trying defaults...\n", can_res);
         can_res = can.init(param_can_bitrate.default_);
         if (can_res >= 0)
         {
-            lowsyslog("CAN bitrate %u\n", unsigned(param_can_bitrate.default_));
+            lowsyslog("CAN %u bps\n", unsigned(param_can_bitrate.default_));
             break;
         }
     }
@@ -161,11 +172,25 @@ void init()
         {
             break;
         }
-        lowsyslog("UAVCAN start failed: %i\n", res);
+        lowsyslog("UAVCAN start: %i\n", res);
         ::sleep(1);
     }
 
-    while (getParamServer().start(&param_manager) < 0) { }
+    /*
+     * Param server
+     */
+    static uavcan::ParamServer param_server(node);
+    while (param_server.start(&param_manager) < 0) { }
+
+    /*
+     * Magnet control
+     */
+    static uavcan::Subscriber<uavcan::equipment::hardpoint::Command> sub_cmd(node);
+    while (sub_cmd.start(handleHardpointCommand) < 0) { }
+
+    static uavcan::Timer tmr_status(node);
+    tmr_status.setCallback(publishHardpointStatus);
+    tmr_status.startPeriodic(uavcan::MonotonicDuration::fromMSec(1000));
 }
 
 }
@@ -185,7 +210,7 @@ int main(void)
         const int spin_res = getNode().spin(uavcan::MonotonicDuration::fromMSec(25));
         if (spin_res < 0)
         {
-            lowsyslog("Spin failure: %i\n", spin_res);
+            lowsyslog("Spin %i\n", spin_res);
         }
         setLed(can.driver.hadActivity());
     }
