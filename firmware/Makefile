@@ -21,11 +21,11 @@ UDEFS = -DFW_VERSION_MAJOR=1 -DFW_VERSION_MINOR=0 -DHW_VERSION=1 -DNDEBUG
 #
 
 UDEFS += -DUAVCAN_STM32_TIMER_NUMBER=2    \
+         -DUAVCAN_STM32_NUM_IFACES=1      \
          -DUAVCAN_STM32_CHIBIOS=1         \
          -DUAVCAN_TINY=1                  \
          -DUAVCAN_MEM_POOL_BLOCK_SIZE=56  \
-         -DUAVCAN_TOSTRING=0              \
-         -DUAVCAN_EXCEPTIONS=0
+         -DUAVCAN_TOSTRING=0
 
 include uavcan/libuavcan/include.mk
 CPPSRC += $(LIBUAVCAN_SRC)
