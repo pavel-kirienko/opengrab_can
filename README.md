@@ -31,16 +31,9 @@ Schematics and Gerber files are available in this repository; hardware design fi
 The firmware can be built with Embedded ARM GCC or any other GCC-based ARM toolchain.
 
 ```shell
-# Clone the repository
-git clone https://github.com/pavel-kirienko/opengrab_can
-cd opengrab_can/
 git submodule update --init --recursive
-
-# Pull the dependencies
 cd firmware/
 git clone https://github.com/pavel-kirienko/uavcan  # Or make a symlink instead
-
-# Build
 make
 
 # Flash. The following helper scripts are available:
