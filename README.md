@@ -34,17 +34,13 @@ The firmware can be built with Embedded ARM GCC or any other GCC-based ARM toolc
 # Clone the repository
 git clone https://github.com/pavel-kirienko/opengrab_can
 cd opengrab_can/
-git submodule init
-git submodule update
+git submodule update --init --recursive
 
 # Pull the dependencies
-cd firmware/crdr_chibios/
-./fetch_chibios.sh
-cd ..
 git clone https://github.com/pavel-kirienko/uavcan  # Or make a symlink instead
 
 # Build
-make RELEASE=1                                      # Omit RELEASE=1 to build debug version
+make
 
 # Flash. The following helper scripts are available:
 # ./crdr_chibios/tools/stlink_flash.sh       # ST-Link v2
