@@ -44,8 +44,9 @@ UINCDIR += dsdlc_generated
 
 SERIAL_CLI_PORT_NUMBER = 1
 
+RELEASE=1
 RELEASE_OPT = -Os -fomit-frame-pointer
-DEBUG_OPT = -Os -g3
+DEBUG_OPT = $(RELEASE_OPT)
 
 LDSCRIPT = ld.ld
 
