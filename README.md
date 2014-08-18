@@ -37,6 +37,7 @@ cd opengrab_can/
 git submodule update --init --recursive
 
 # Pull the dependencies
+cd firmware/
 git clone https://github.com/pavel-kirienko/uavcan  # Or make a symlink instead
 
 # Build
