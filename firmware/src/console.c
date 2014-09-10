@@ -8,8 +8,8 @@
 #include <ch.h>
 #include <hal.h>
 #include <shell.h>
-#include <crdr_chibios/sys/sys.h>
-#include <crdr_chibios/config/config.h>
+#include <zubax_chibios/sys/sys.h>
+#include <zubax_chibios/config/config.h>
 #include "magnet.h"
 
 static void cmd_magnet(BaseSequentialStream *chp, int argc, char *argv[])

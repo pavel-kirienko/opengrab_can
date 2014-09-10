@@ -6,9 +6,9 @@
 #include <hal.h>
 #include <string.h>
 #include <unistd.h>
-#include <crdr_chibios/sys/sys.h>
-#include <crdr_chibios/watchdog/watchdog.hpp>
-#include <crdr_chibios/config/config.hpp>
+#include <zubax_chibios/sys/sys.h>
+#include <zubax_chibios/watchdog/watchdog.hpp>
+#include <zubax_chibios/config/config.hpp>
 #include <uavcan_stm32/uavcan_stm32.hpp>
 #include <uavcan/protocol/param_server.hpp>
 #include <uavcan/equipment/hardpoint/Command.hpp>
@@ -19,8 +19,8 @@
 namespace
 {
 
-crdr_chibios::config::Param<unsigned> param_can_bitrate("can_bitrate", 1000000, 20000, 1000000);
-crdr_chibios::config::Param<unsigned> param_node_id("uavcan_node_id", 125, 1, 125);
+zubax_chibios::config::Param<unsigned> param_can_bitrate("can_bitrate", 1000000, 20000, 1000000);
+zubax_chibios::config::Param<unsigned> param_node_id("uavcan_node_id", 125, 1, 125);
 
 uavcan_stm32::CanInitHelper<> can;
 
@@ -154,7 +154,7 @@ void init()
     Node& node = getNode();
 
     node.setNodeID(param_node_id.get());
-    node.setName("com.courierdrone.opengrab_can");
+    node.setName("com.zubax.opengrab_can");
 
     uavcan::protocol::SoftwareVersion swver;
     swver.major = FW_VERSION_MAJOR;
@@ -199,7 +199,7 @@ int main(void)
 {
     init();
 
-    crdr_chibios::watchdog::Timer wdt;
+    zubax_chibios::watchdog::Timer wdt;
     wdt.startMSec(100);
 
     getNode().setStatusOk();

@@ -24,4 +24,4 @@
 #   error "Invalid configuration: Either DEBUG_BUILD or RELEASE_BUILD must be true"
 #endif
 
-#include <crdr_chibios/sys/chconf_tail.h>
+#include <zubax_chibios/sys/chconf_tail.h>

@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-project(crdr_gps_test)
+project(zubax_gps_test)
 
 find_library(UAVCAN_LIB uavcan REQUIRED)
 

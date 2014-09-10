@@ -5,8 +5,8 @@
 #include "magnet.h"
 #include <ch.h>
 #include <hal.h>
-#include <crdr_chibios/sys/sys.h>
-#include <crdr_chibios/watchdog/watchdog.h>
+#include <zubax_chibios/sys/sys.h>
+#include <zubax_chibios/watchdog/watchdog.h>
 
 #define PWMD    PWMD1
 

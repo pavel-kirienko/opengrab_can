@@ -50,4 +50,4 @@ DEBUG_OPT = $(RELEASE_OPT)
 
 LDSCRIPT = ld.ld
 
-include crdr_chibios/rules_stm32f103.mk
+include zubax_chibios/rules_stm32f103.mk

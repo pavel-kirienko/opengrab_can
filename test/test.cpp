@@ -64,7 +64,7 @@ int main(int argc, const char** argv)
     {
         iface_names.emplace_back(argv[i]);
     }
-    uavcan_linux::NodePtr node = initNode(iface_names, self_node_id, "com.courierdrone.opengrab_can_test_subscriber");
+    uavcan_linux::NodePtr node = initNode(iface_names, self_node_id, "com.zubax.opengrab_can_test_subscriber");
     runForever(node);
     return 0;
 }
