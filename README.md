@@ -32,8 +32,7 @@ The firmware can be built with Embedded ARM GCC or any other GCC-based ARM toolc
 
 ```shell
 git submodule update --init --recursive
-cd firmware/
-git clone https://github.com/pavel-kirienko/uavcan  # Or make a symlink instead
+cd firmware
 make
 
 # Flash. The following helper scripts are available:

@@ -13,6 +13,5 @@ build
 .project
 .cproject
 
-# Libs
-uavcan
+# Outputs
 dsdlc_generated
