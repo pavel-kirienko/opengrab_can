@@ -20,7 +20,7 @@ namespace
 {
 
 zubax_chibios::config::Param<unsigned> param_can_bitrate("can_bitrate", 1000000, 20000, 1000000);
-zubax_chibios::config::Param<unsigned> param_node_id("uavcan_node_id", 125, 1, 125);
+zubax_chibios::config::Param<unsigned> param_node_id("uavcan_node_id", 1, 1, 125);
 
 uavcan_stm32::CanInitHelper<> can;
 

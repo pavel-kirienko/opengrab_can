@@ -18,7 +18,7 @@ EPM can be controlled using `uavcan.equipment.hardpoint.Command`.
 Default config:
 
 - CAN bitrate: 1 Mbps.
-- UAVCAN Node ID: 125.
+- UAVCAN Node ID: 1.
 
 ## Getting Hardware
 Grab your OGCAN hardware here: http://nicadrone.com/index.php?id_product=18&controller=product
